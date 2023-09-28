@@ -16,7 +16,7 @@ import {
   getUserByNickName,
   getModuleByCode,
   getModuleIndexByCode
-} from './scripts/functions'
+} from './functions'
 
 document.querySelector('#app').innerHTML = `
   <div>

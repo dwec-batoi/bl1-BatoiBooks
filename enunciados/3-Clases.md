@@ -2,7 +2,7 @@
 ## Práctica 3.1 - Clases en BatoiBooks
 Continuando con nuestra aplicación para vender libros de texto y apuntes vamos a construir las clases que usaremos en la aplicación. Recordad que los datos con los que trabaja la aplicación los tenemos en el fichero `datos.js` en una variable llamada `data`.
 
-Dentro de `/scripts` crearemos una carpeta llamada `model` donde crearemos las clases. Aunque deberíamos hacerlas ya todas, al menos vamos a hacer aquellas con las que estamos trabajando: _book, books, user, users, module_ y _modules_. 
+Como empezamos a tener muchos ficheros Javascript crearemos un directorio al que llamaremos `/src` para meterlos todos (excepto `main.js` que al ser nuestro fichero principal lo dejaremos en el raíz del proyecto). Dentro de _/src_ crearemos una carpeta llamada `model` donde guardaremos las clases. Aunque podríamos hacerlas ya todas, al menos vamos a hacer aquellas con las que estamos trabajando: _book, books, user, users, module_ y _modules_. 
 
 Las clases de objeto (_Book_, _User_ y _Module_) tendrán
 - constructor: recibe cada campo del objeto a crear (excepto en _Book_ que al ser muchos campos le pasareos un objeto con todos ellos)
