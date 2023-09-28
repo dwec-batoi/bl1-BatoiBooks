@@ -1,22 +1,9 @@
 import './style.css'
 import batoiLogo from '/logoBatoi.png'
 import data from './datos'
-import {
-  booksFromUser,
-  booksFromModule,
-  booksCheeperThan,
-  booksWithStatus,
-  averagePriceOfBooks,
-  booksOfTypeNote,
-  booksNotOfTypeNote,
-  booksNotSold,
-  incrementPriceOfbooks,
-  getUserById,
-  getUserIndexById,
-  getUserByNickName,
-  getModuleByCode,
-  getModuleIndexByCode
-} from './functions'
+import Books from './src/model/books.class'
+
+const books = new Books
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -29,7 +16,12 @@ document.querySelector('#app').innerHTML = `
   </div>
 `
 
-console.log(booksFromUser(data.books, 4))
-console.log(booksWithStatus(booksFromModule(data.books, "5021"), "good"))
-incrementPriceOfbooks(booksFromModule(data.books, "5025"), 0.1)
-console.log(booksFromModule(data.books, "5025"))
+function init() {
+  books.populateData(data.books)
+}
+
+init()
+console.log(books.booksFromUser(4))
+console.log(books.booksFromModule("5021").booksWithStatus("good"))
+books.booksFromModule("5025").incrementPriceOfbooks(0.1)
+console.log(books.booksFromModule("5025"))

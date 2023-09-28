@@ -9,7 +9,7 @@ describe('Clase Users', () => {
 	test('Existe la clase Users', () => {
 		expect(Users).toBeDefined();
 	});
-  
+
   test('constructor crea el array en la propiedad data', () => {
     const users = new Users()
     expect(users.data).toEqual([]);
