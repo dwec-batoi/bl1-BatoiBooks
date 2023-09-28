@@ -14,7 +14,7 @@ import {
   getUserByNickName,
   getModuleByCode,
   getModuleIndexByCode
-} from '../scripts/functions'
+} from '../functions'
 
 describe('Funciones con libros', () => {
   const books = [
