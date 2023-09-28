@@ -127,63 +127,71 @@ describe('Clase Books', () => {
 })
 
 describe('Clase Books', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     books = new Books()
     book1 = books.addItem(data[0])
     book2 = books.addItem(data[1])
     book3 = books.addItem(data[2])
   })
 
-  test('booksFromUser devuelve un array con los 2 libros del usuario 2', () => {
+  test('booksFromUser devuelve un objeto Books con los 2 libros del usuario 2', () => {
     const response = books.booksFromUser(2)
-    expect(response.length).toBe(2)
-    for (let item of response) {
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data.length).toBe(2)
+    for (let item of response.data) {
       expect(item.idUser).toBe(2)
     }
   })
 
-  test('booksFromUser devuelve un array vacío para el usuario 12', () => {
+  test('booksFromUser devuelve un objeto Books vacío para el usuario 12', () => {
     const response = books.booksFromUser(12)
-    expect(response).toEqual([])
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data).toEqual([])
   })
 
-  test('booksFromModule devuelve un array con los 2 libros del módulo ABCD', () => {
+  test('booksFromModule devuelve un objeto Books con los 2 libros del módulo ABCD', () => {
     const response = books.booksFromModule('ABCD')
-    expect(response.length).toBe(2)
-    for (let item of response) {
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data.length).toBe(2)
+    for (let item of response.data) {
       expect(item.idModule).toBe('ABCD')
     }
   })
 
   test('booksFromModule devuelve un array vacío para el módulo ZZZZ', () => {
     const response = books.booksFromModule('ZZZZ')
-    expect(response).toEqual([])
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data).toEqual([])
   })
 
   test('booksCheeperThan devuelve un array con los 2 libros de 50 € o menos', () => {
     const response = books.booksCheeperThan(50)
-    expect(response.length).toBe(2)
-    for (let item of response) {
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data.length).toBe(2)
+    for (let item of response.data) {
       expect(item.price).not.toBeGreaterThan(50)
     }
   })
 
   test('booksCheeperThan devuelve un array vacío para menos de 1 €', () => {
     const response = books.booksCheeperThan(1)
-    expect(response).toEqual([])
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data).toEqual([])
   })
 
   test('booksWithStatus devuelve un array con los 2 libros del estado bad', () => {
     const response = books.booksWithStatus('bad')
-    expect(response.length).toBe(2)
-    for (let item of response) {
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data.length).toBe(2)
+    for (let item of response.data) {
       expect(item.status).toBe('bad')
     }
   })
 
   test('booksWithStatus devuelve un array vacío para el estado new', () => {
     const response = books.booksWithStatus('new')
-    expect(response).toEqual([])
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data).toEqual([])
   })
 
   test('averagePriceOfBooks devuelve 32.33 €', () => {
@@ -193,14 +201,16 @@ describe('Clase Books', () => {
 
   test('booksOfTypeNote devuelve un array con el registro de apuntes', () => {
     const response = books.booksOfTypeNote()
-    expect(response.length).toBe(1)
-    expect(response[0].publisher).toBe('Apunts')
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data.length).toBe(1)
+    expect(response.data[0].publisher).toBe('Apunts')
   })
 
   test('booksNotOfTypeNote devuelve un array con los 2 libro de editorial', () => {
     const response = books.booksNotOfTypeNote()
-    expect(response.length).toBe(2)
-    for (let item of response) {
+    expect(response).toBeInstanceOf(Books)
+    expect(response.data.length).toBe(2)
+    for (let item of response.data) {
       expect(item.phblisher).not.toBe('Apunts')
     }
   })
