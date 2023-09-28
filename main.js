@@ -1,6 +1,22 @@
 import './style.css'
 import batoiLogo from '/logoBatoi.png'
 import data from './datos'
+import {
+  booksFromUser,
+  booksFromModule,
+  booksCheeperThan,
+  booksWithStatus,
+  averagePriceOfBooks,
+  booksOfTypeNote,
+  booksNotOfTypeNote,
+  booksNotSold,
+  incrementPriceOfbooks,
+  getUserById,
+  getUserIndexById,
+  getUserByNickName,
+  getModuleByCode,
+  getModuleIndexByCode
+} from './scripts/functions'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -12,3 +28,8 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
+
+console.log(booksFromUser(data.books, 4))
+console.log(booksWithStatus(booksFromModule(data.books, "5021"), "good"))
+incrementPriceOfbooks(booksFromModule(data.books, "5025"), 0.1)
+console.log(booksFromModule(data.books, "5025"))
