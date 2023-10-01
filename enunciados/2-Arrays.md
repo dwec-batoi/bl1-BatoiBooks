@@ -3,7 +3,7 @@
 En esta primera parte de la aplicación crearemos las pricipales funciones para trabajar con nuestros datos (recuerda que por ahora los tenemos en el fichero `datos.js` en una variable llamada `data`). En concreto haremos las funciones para trabajar con libros, usuarios y módulos.
 
 Para poder pasar los tests a nuestro programa y comprobar si funciona repartiremos el código en 2 ficheros JS distintos:
-- **`index.js`**: es el programa principal que hace llamadas a las funciones y muestra datos por la consola
+- **`main.js`**: es el programa principal que hace llamadas a las funciones y muestra datos por la consola
 - **`functions.js`**: es el fichero que contiene las funciones, que son:
   - **booksFromUser(array, number) : array**: recibe el array de libros y la id de un usuario y devuelve el array con todos los libros de dicho usuario
   - **booksFromModule(array, string) : array**: recibe el array de libros y el código de un módulo y devuelve el array con todos los libros de dicho módulo
@@ -41,7 +41,7 @@ export {
 }
 ```
 
-En el `index.js` mostraremos por consola:
+En el `main.js` mostraremos por consola:
 - todos los libros del usuario 4
 - todos los libros del módulo 5021 que están en buen estado ("good")
 - incrementa un 10% el precio de los libros del módulo 5025 y muéstralos
