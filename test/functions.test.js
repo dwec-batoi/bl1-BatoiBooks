@@ -180,7 +180,11 @@ describe('Funciones con usuarios', () => {
     expect(getUserIndexById(users, 2)).toBe(1);
   });
 
-  test('getUserIndexById devuelve un objeto vacío si el usuario no existe', () => {
+  test('getUserIndexById encuentra el primer usuario del array', () => {
+    expect(getUserIndexById(users, 4)).toBe(0);
+  });
+
+  test('getUserIndexById devuelve -1 si el usuario no existe', () => {
     expect(getUserIndexById(users, 7)).toBe(-1);
   });
 
@@ -223,7 +227,11 @@ describe('Funciones con módulos', () => {
     expect(getModuleIndexByCode(modules, 'DWES')).toBe(1);
   });
 
-  test('getModuleIndexByCode devuelve un objeto vacío si el módulo no existe', () => {
+  test('getModuleIndexByCode encuentra el primer módulo del array', () => {
+    expect(getModuleIndexByCode(modules, 'DWEC')).toBe(0);
+  });
+
+  test('getModuleIndexByCode devuelve -1 si el módulo no existe', () => {
     expect(getModuleIndexByCode(modules, 'AAAA')).toBe(-1);
   });
 })
