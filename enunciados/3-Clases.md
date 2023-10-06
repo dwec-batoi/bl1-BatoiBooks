@@ -40,6 +40,7 @@ En el `main.js` lo que haremos es:
 - importamos la variable _data_ del fichero `datos.js` (ya lo tenéis hecho)
 - llenamos las clases _users_, _modules_ y _books_ con sus datos (_populateData_)
 - mostramos por consola: 
+  - todos los libros del usuario 4
   - todos los libros del módulo 5021 que están en buen estado ("good")
   - incrementa un 10% el precio de los libros del módulo 5025 y muéstralos
 
