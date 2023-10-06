@@ -36,7 +36,7 @@ Y donde tengamos que usarla la importaremos, por ejemplo en `books.class.js`:
 import Book from './book.class'
 ```
 
-En el `index.js` lo que haremos es:
+En el `main.js` lo que haremos es:
 - importamos la variable _data_ del fichero `datos.js` (ya lo tenéis hecho)
 - llenamos las clases _users_, _modules_ y _books_ con sus datos (_populateData_)
 - mostramos por consola: 
