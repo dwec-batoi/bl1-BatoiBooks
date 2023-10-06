@@ -1,4 +1,4 @@
-const data = {
+{
   "courses": [
     {
       "id": "3",
@@ -1839,22 +1839,26 @@ const data = {
     {
       "id": 2,
       "email": "ignasi.gomis.mullor@gmail.com",
-      "nick": "Ignasi"
+      "nick": "Ignasi",
+      "password": "81dc9bdb52d04dc20036dbd8313ed055"
     },
     {
       "email": "juanseguravasco@gmail.com",
       "nick": "Juan",
-      "id": 3
+      "id": 3,
+      "password": ""
     },
     {
       "email": "marta@gmail.lan",
       "nick": "Marta",
-      "id": 4
+      "id": 4,
+      "password": ""
     },
     {
       "email": "Ximo@gmail.lan",
       "nick": "Ximo",
-      "id": 5
+      "id": 5,
+      "password": ""
     }
   ],
   "books": [
@@ -1932,5 +1936,3 @@ const data = {
     }
   ]
 }
-
-export default data
