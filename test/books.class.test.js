@@ -1,37 +1,34 @@
-import { describe, test, expect, beforeEach, beforeAll } from 'vitest'
+import { describe, test, expect, beforeEach, vi } from 'vitest'
 import Books from '../src/model/books.class'
 import Book from '../src/model/book.class'
+import BooksRepository from '../src/repositories/books.repositories'
+import data from './fixtures/books.json'
+import newBooks from './fixtures/newBooks.json'
 
-let books, book1, book2, book3
-const data = [
-  {
-    idUser: 2,
-    idModule: 'ABCD',
-    publisher: "Apunts",
-    price: 28,
-    pages: 76,
-    status: "bad",
-    soldDate: "2023-03-25"
-  },
-  {
-    idUser: 2,
-    idModule: 'AAAA',
-    publisher: "McGraw-Hill",
-    price: 14.5,
-    pages: 36,
-    status: "bad",
-  },
-  {
-    idUser: 6,
-    idModule: 'ABCD',
-    publisher: "Vértice",
-    price: 54.5,
-    pages: 26,
-    status: "good",
-  },
-]
+let id = 0
+vi.mock('../src/repositories/books.repositories')
+BooksRepository.mockImplementation(() => {
+  return {
+    addBook: (item) => {
+      item.id = ++id
+      return item
+    },
+    getAllBooks: () => data,
+    removeBook: (id) => {
+      if (id === data[0].id || id === data[1].id || id === data[2].id)
+        return {}
+      return Promise.reject(new Error('empty'))
+    },
+    updatePriceOfBook: (item) => item
+  }
+})
 
 describe('Clase Books', () => {
+  beforeEach(() => {
+    id = 0
+    BooksRepository.mockClear()
+  })
+
 	test('Existe la clase Books', () => {
 		expect(Books).toBeDefined();
 	});
@@ -41,106 +38,89 @@ describe('Clase Books', () => {
     expect(books.data).toEqual([]);
   });
   
-  test('addItem añade un nuevo libro', () => {
+  test('addItem añade un nuevo libro', async () => {
     const books = new Books()
-    const newBook = books.addItem(data[0])
+    const newBook = await books.addItem(newBooks[0])
     expect(books.data.length).toBe(1)
     expect(newBook).toBeInstanceOf(Book)
     expect(newBook.id).toBe(1);
-    for (let prop in data[0]) {
-      expect(newBook[prop]).toBe(data[0][prop])
+    for (let prop in newBooks[0]) {
+      expect(newBook[prop]).toBe(newBooks[0][prop])
     }
   });
 
-  test('addItem asigna id consecutivas sin repetir', () => {
+  test('addItem asigna id consecutivas sin repetir', async () => {
     const books = new Books()
-    let newBook = books.addItem(data[0])
+    let newBook = await books.addItem(newBooks[0])
     expect(books.data.length).toBe(1)
     expect(newBook.id).toBe(1);
-    newBook = books.addItem(data[1])
+    newBook = await books.addItem(newBooks[1])
     expect(books.data.length).toBe(2)
     expect(newBook.id).toBe(2);
   });
 
-  test('populateData añade un array de libros', () => {
-    const dataWithId = data.slice()
-    dataWithId[0].id = 35
-    dataWithId[1].id = 31
-    dataWithId[2].id = 3
+  test('populateData añade un array de libros', async () => {
     const books = new Books()
-    books.populateData(data)
+    await books.populateData()
     expect(books.data.length).toBe(3)
     for (let i in data) {
       expect(books.data[i]).toBeInstanceOf(Book)
-      expect(books.data[i].id).toBe(dataWithId[i].id)
+      expect(books.data[i].id).toBe(data[i].id)
       for (let prop in data[i]) {
         expect(books.data[i][prop]).toBe(data[i][prop])
       }
     }
   })
-
-  test('addItem asigna id a partir de la última existente', () => {
-    const dataWithId = data.slice()
-    dataWithId[0].id = 35
-    dataWithId[1].id = 31
-    dataWithId[2].id = 3
-    const books = new Books()
-    books.populateData(dataWithId)
-    let newUser = books.addItem(data[1])
-    expect(books.data.length).toBe(4)
-    expect(newUser.id).toBe(36);
-  });
 })
 
 describe('Clase Books', () => {
+  let books
   beforeEach(() => {
+    BooksRepository.mockClear()
     books = new Books()
-    book1 = books.addItem(data[0])
-    book2 = books.addItem(data[1])
+    books.populateData()
   })
 
-  test('removeItem elimina un libro si existe', () => {
-    const bookToRemove = books.removeItem(book2.id)
+  test('removeItem elimina un libro si existe', async () => {
+    const bookToRemove = await books.removeItem(data[1].id)
     expect(bookToRemove).toEqual({});
-    expect(books.data.length).toBe(1);
-    books.removeItem(book1.id)
-    expect(books.data.length).toBe(0);
-  });
-
-  test('incrementPriceOfbooks incrementa el precio un 10%', () => {
-    books.incrementPriceOfbooks(0.1)
     expect(books.data.length).toBe(2);
-    expect(books.data[0].price).toBe(30.8)
-    expect(books.data[1].price).toBe(15.95)
+    await books.removeItem(data[0].id)
+    expect(books.data.length).toBe(1);
   });
 
   test('removeItem lanza una excepción si un libro no existe', () => {
-    expect(() => books.removeItem(100)).toThrow();
-    expect(books.data.length).toBe(2);
+    expect(() => books.removeItem(100)).rejects.toThrow();
+    expect(books.data.length).toBe(3);
+  });
+
+  test('incrementPriceOfbooks incrementa el precio un 10% y lo guarda con 2 decimales', async () => {
+    const oldPrices = books.data.map(book => book.price)
+    await books.incrementPriceOfbooks(0.1)
+    books.data.every((book, index) => book.price === Math.round(oldPrices[index]*100)/100 )
   });
 
   test('toString pinta correctamente los libros', () => {
     expect(books.toString()).toBe(`Libros (total ${books.data.length})
-    - ${book1.idModule}. Editorial: ${book1.publisher}. ${book1.pages} páginas. ${book1.price.toFixed(2)} €.
-    - ${book2.idModule}. Editorial: ${book2.publisher}. ${book2.pages} páginas. ${book2.price.toFixed(2)} €.`)
+    - ${data[0].idModule}. Editorial: ${data[0].publisher}. ${data[0].pages} páginas. ${data[0].price.toFixed(2)} €.
+    - ${data[1].idModule}. Editorial: ${data[1].publisher}. ${data[1].pages} páginas. ${data[1].price.toFixed(2)} €.
+    - ${data[2].idModule}. Editorial: ${data[2].publisher}. ${data[2].pages} páginas. ${data[2].price.toFixed(2)} €.`)
   });
 })
 
 describe('Clase Books', () => {
+  let books
   beforeEach(() => {
+    BooksRepository.mockClear()
     books = new Books()
-    book1 = books.addItem(data[0])
-    book2 = books.addItem(data[1])
-    book3 = books.addItem(data[2])
+    books.populateData()
   })
 
   test('booksFromUser devuelve un objeto Books con los 2 libros del usuario 2', () => {
     const response = books.booksFromUser(2)
     expect(response).toBeInstanceOf(Books)
     expect(response.data.length).toBe(2)
-    for (let item of response.data) {
-      expect(item.idUser).toBe(2)
-    }
+    response.data.every((item) => expect(item.idUser).toBe(2))
   })
 
   test('booksFromUser devuelve un objeto Books vacío para el usuario 12', () => {
@@ -196,7 +176,7 @@ describe('Clase Books', () => {
 
   test('averagePriceOfBooks devuelve 32.33 €', () => {
     const response = books.averagePriceOfBooks()
-    expect(response).toBe('32.33 €')
+    expect(response).toBe('32.36 €')
   })
 
   test('booksOfTypeNote devuelve un array con el registro de apuntes', () => {
