@@ -4,6 +4,8 @@ Continuando con nuestra aplicación para vender libros de texto y apuntes vamos 
 
 Como aún no tenemos nuestra API de Batoibooks hecha vamos a utilizar la API que proporciona `json-server`, que trabajará con los datos almacenados en el fichero `batoibooks.json` (recordad que esto es del _backside_ y no tiene nada que ver con nuestra aplicación en el _front_ por lo que ni debería estar en nuestro repositorio).
 
+**NOTA**: Fijaos que los usuarios tienen un nuevo campo, `password`, donde se almacenará su contraseña. Por tanto deberemos modificar el constructor de a clase `User` y el código donde lo llamamos. 
+
 Para organizar el código crearemos en _/src_ el directorio `/repositories` y allí haremos un fichero JS para cada tabla del modelo (_users_, _modules_ y _books_) con los métodos necesarios para manipular dicha tabla. Los métodos necesarios serán:
 - `getAllXxxx`: devuelve todos los registros de esa tabla. Haremos `getAllUsers`, `getAllModules` y `getAllBooks`
 - `getXxxxById` (o _ByCode_ en el caso de los módulos): devuelve el registro cuya _id_ (o _code_) coincide con la pasada como parámetro
