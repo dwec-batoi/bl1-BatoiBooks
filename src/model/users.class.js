@@ -1,4 +1,5 @@
 import User from "./user.class"
+import UsersRepository from "../repositories/users.repositories"
 
 export default class Users {
   constructor() {
@@ -9,25 +10,31 @@ export default class Users {
     return this.data.find((item) => item.id === id) || {}
   }
 
-  populateData(payload) {
-    this.data = payload.map((item) => new User(
+  async populateData() {
+    const repository = new UsersRepository()
+    const users = await repository.getAllUsers()
+    this.data = users.map((item) => new User(
       item.id, 
       item.email, 
-      item.nick
+      item.nick, 
+      item.password
     ))
   }
 
-  addItem(payload) {
-    const newUser = new User(getNextId(this.data), payload.email, payload.nick)
+  async addItem(payload) {
+    const repository = new UsersRepository()
+    const user = await repository.addUser(payload)
+    const newUser = new User(user.id, user.email, user.nick, user.password)
     this.data.push(newUser)
     return newUser
   }
 
-  removeItem(id) {
+  async removeItem(id) {
+    const repository = new UsersRepository()
+    await repository.removeUser(id)
     const index = this.data.findIndex((item) => item.id === id)
-    if (index === -1) {
-      throw "No existe un usuario con id " + id
-    }
+    // No necesitamos comprobar si devuelve -1 porque si no existe
+    // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1)
     return {}
   }
@@ -44,6 +51,3 @@ export default class Users {
   }
 }
 
-function getNextId(data) {
-  return data.reduce((max, item) => item.id > max ? item.id : max, 0) + 1
-}

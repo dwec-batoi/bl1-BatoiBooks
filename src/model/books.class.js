@@ -1,4 +1,5 @@
 import Book from "./book.class"
+import BooksRepository from "../repositories/books.repositories"
 
 const NOTES = 'Apunts'
 
@@ -11,22 +12,26 @@ export default class Books {
     return this.data.find((item) => item.id === id) || {}
   }
 
-  populateData(payload) {
-    this.data = payload.map((item) => new Book(item))
+  async populateData() {
+    const repository = new BooksRepository()
+    const books = await repository.getAllBooks()
+    this.data = books.map((item) => new Book(item))
   }
 
-  addItem(payload) {
-    payload.id = getNextId(this.data)
-    const newBook = new Book(payload)
+  async addItem(payload) {
+    const repository = new BooksRepository()
+    const book = await repository.addBook(payload)
+    const newBook = new Book(book)
     this.data.push(newBook)
     return newBook
   }
 
-  removeItem(id) {
+  async removeItem(id) {
+    const repository = new BooksRepository()
+    await repository.removeBook(id)
     const index = this.data.findIndex((item) => item.id === id)
-    if (index === -1) {
-      throw "No existe un libro con id " + id
-    }
+    // No necesitamos comprobar si devuelve -1 porque si no existe
+    // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1)
     return {}
   }
@@ -88,13 +93,13 @@ export default class Books {
   }
 
   incrementPriceOfbooks(increment) {
-    return this.data.map((item) => {
-      item.price = item.price + item.price * increment
-      return item
+    const repository = new BooksRepository()
+    this.data.forEach(async (book) => {
+      const newPrice = book.price * (1 + increment)
+      const roundedPrice = Math.round(newPrice * 100) / 100
+      const bookChanged = await repository.updatePriceOfBook(book.id, roundedPrice)
+      book.price = bookChanged.price
     })
   }
 }
 
-function getNextId(data) {
-  return data.reduce((max, item) => item.id > max ? item.id : max, 0) + 1
-}

@@ -1,4 +1,5 @@
 import Module from "./module.class"
+import ModulesRepository from "../repositories/modules.repositories"
 
 export default class Modules {
   constructor() {
@@ -9,8 +10,10 @@ export default class Modules {
     return this.data.find((item) => item.code === code) || {}
   }
 
-  populateData(payload) {
-    this.data = payload.map((item) => new Module(
+  async populateData() {
+    const repository = new ModulesRepository()
+    const modules = await repository.getAllModules()
+    this.data = modules.map((item) => new Module(
       item.code, 
       item.cliteral, 
       item.vliteral, 
