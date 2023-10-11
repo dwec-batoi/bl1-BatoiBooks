@@ -13,7 +13,7 @@ Las clases de array (_Books_, _Users_ y _Modules_) tendrán:
 - `populateData`: recibe un array con los datos iniciales y los carga en las clases. No devuelve nada
 - `addItem`: recibe un objeto con los datos del nuevo elemento (sin _id_) y lo añade al array. Devuelve el nuevo elemento añadido
 - `removeItem`: recibe una _id_ (o un _code_ si es un módulo) y lo elimina del array. Si no existe lanzará una excepción
-- `getItemById/getItemByCode`: recibe una _id_ (o un _code_ si es un módulo) y devuelve el elemento con dicha _id_ o un objeto vacío si no existe (para _users_ y _modules_ ya los tenemos hechos)
+- `getUserById/getBookById/getModuleByCode`: recibe una _id_ (o un _code_ si es un módulo) y devuelve el elemento con dicha _id_ o un objeto vacío si no existe (para _users_ y _modules_ ya los tenemos hechos)
 - `toString` muestra los elementos del array (llama al `toString` de cada elemento)
 - el resto de métodos hechos en el ejercicio anterior (`booksFromUser`, `getUserByNick`, etc). Para poder aplicar varios métodos de filtrado a los libros (p.ej. filtrar por módulo y precio) modificaremos los métodos que filtran libros para que no devuelvan un array de libros sino un nuevo objeto _Books_ con los libros filtrados (al que podremos aplicar un nuevo filtro). Ej.:
   ```javascript
@@ -40,6 +40,7 @@ En el `main.js` lo que haremos es:
 - importamos la variable _data_ del fichero `datos.js` (ya lo tenéis hecho)
 - llenamos las clases _users_, _modules_ y _books_ con sus datos (_populateData_)
 - mostramos por consola: 
+  - todos los libros del usuario 4
   - todos los libros del módulo 5021 que están en buen estado ("good")
   - incrementa un 10% el precio de los libros del módulo 5025 y muéstralos
 
