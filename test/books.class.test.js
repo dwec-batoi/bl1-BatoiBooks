@@ -214,4 +214,15 @@ describe('Clase Books', () => {
       expect(item.phblisher).not.toBe('Apunts')
     }
   })
+
+  test('getBookById encuentra un libro que existe', () => {
+    const response = books.getBookById(2)
+    expect(response).toBeInstanceOf(Book)
+    expect(response.id).toEqual(2);
+  });
+
+  test('getBookById devuelve un objeto vacío si el libro no existe', () => {
+    expect(books.getBookById(7)).toEqual({});
+  });
+
 })

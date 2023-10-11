@@ -90,4 +90,36 @@ describe('Clase Users', () => {
     - ${user2.nick} (${user2.id}) - ${user2.email}`)
   });
 
+  test('getUserById encuentra un usuario que existe', () => {
+    const response = users.getUserById(2)
+    expect(response).toBeInstanceOf(User)
+    expect(response.id).toEqual(2)
+  });
+
+  test('getUserById devuelve un objeto vacío si el usuario no existe', () => {
+    expect(users.getUserById(7)).toEqual({});
+  });
+
+  test('getUserIndexById encuentra un usuario que existe', () => {
+    expect(users.getUserIndexById(2)).toBe(1);
+  });
+
+  test('getUserIndexById encuentra el primer usuario del array', () => {
+    expect(users.getUserIndexById(1)).toBe(0);
+  });
+
+  test('getUserIndexById devuelve -1 si el usuario no existe', () => {
+    expect(users.getUserIndexById(7)).toBe(-1);
+  });
+
+  test('getUserByNickName encuentra un usuario que existe', () => {
+    const response = users.getUserByNickName('dsa')
+    expect(response).toBeInstanceOf(User)
+    expect(response.nick).toEqual('dsa')
+  });
+
+  test('getUserByNickName devuelve un objeto vacío si el usuario no existe', () => {
+    expect(users.getUserByNickName('Pep')).toEqual({});
+  });
+
 })

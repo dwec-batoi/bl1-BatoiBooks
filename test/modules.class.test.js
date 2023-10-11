@@ -69,4 +69,26 @@ describe('Clase Modules', () => {
     - ${module2.code} ${module2.vliteral} (${module2.cliteral})`)
   });
 
+  test('getModuleByCode encuentra un módulo que existe', () => {
+    const response = modules.getModuleByCode('BBAA')
+    expect(response).toBeInstanceOf(Module)
+    expect(response.code).toEqual('BBAA')
+  })
+
+  test('getModuleByCode devuelve un objeto vacío si el módulo no existe', () => {
+    expect(modules.getModuleByCode('AZZA')).toEqual({});
+  });
+
+  test('getModuleIndexByCode encuentra un módulo que existe', () => {
+    expect(modules.getModuleIndexByCode('BBAA')).toBe(1);
+  });
+
+  test('getModuleIndexByCode encuentra el primer módulo del array', () => {
+    expect(modules.getModuleIndexByCode('AAAA')).toBe(0);
+  });
+
+  test('getModuleIndexByCode devuelve -1 si el módulo no existe', () => {
+    expect(modules.getModuleIndexByCode('AZZA')).toBe(-1);
+  });
+
 })
