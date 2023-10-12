@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest'
 import data from './fixtures/modules.json'
-import ModulesRepository from '../src/repositories/modules.repositories'
+import ModulesRepository from '../src/repositories/modules.repository'
 
 const SERVER = import.meta.env.VITE_URL_API
 

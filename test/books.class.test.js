@@ -1,12 +1,12 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest'
 import Books from '../src/model/books.class'
 import Book from '../src/model/book.class'
-import BooksRepository from '../src/repositories/books.repositories'
+import BooksRepository from '../src/repositories/books.repository'
 import data from './fixtures/books.json'
 import newBooks from './fixtures/newBooks.json'
 
 let id = 0
-vi.mock('../src/repositories/books.repositories')
+vi.mock('../src/repositories/books.repository')
 BooksRepository.mockImplementation(() => {
   return {
     addBook: (item) => {
