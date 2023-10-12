@@ -1,5 +1,5 @@
 import Module from "./module.class"
-import ModulesRepository from "../repositories/modules.repositories"
+import ModulesRepository from "../repositories/modules.repository"
 
 export default class Modules {
   constructor() {

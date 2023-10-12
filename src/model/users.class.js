@@ -1,5 +1,5 @@
 import User from "./user.class"
-import UsersRepository from "../repositories/users.repositories"
+import UsersRepository from "../repositories/users.repository"
 
 export default class Users {
   constructor() {

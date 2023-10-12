@@ -1,5 +1,5 @@
 import Book from "./book.class"
-import BooksRepository from "../repositories/books.repositories"
+import BooksRepository from "../repositories/books.repository"
 
 const NOTES = 'Apunts'
 
