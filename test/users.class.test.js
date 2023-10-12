@@ -1,11 +1,11 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest'
 import Users from '../src/model/users.class'
 import User from '../src/model/user.class'
-import UsersRepository from '../src/repositories/users.repositories'
+import UsersRepository from '../src/repositories/users.repository'
 import data from './fixtures/users.json'
 
 let id = 0
-vi.mock('../src/repositories/users.repositories')
+vi.mock('../src/repositories/users.repository')
 UsersRepository.mockImplementation(() => {
   return {
     addUser: (item) => {

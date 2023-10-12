@@ -1,10 +1,10 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest'
 import Modules from '../src/model/modules.class'
 import Module from '../src/model/module.class'
-import ModulesRepository from '../src/repositories/modules.repositories'
+import ModulesRepository from '../src/repositories/modules.repository'
 import data from './fixtures/modules.json'
 
-vi.mock('../src/repositories/modules.repositories')
+vi.mock('../src/repositories/modules.repository')
 ModulesRepository.mockImplementation(() => {
   return {
     addModule: (item) => item,
