@@ -9,8 +9,8 @@ ModulesRepository.mockImplementation(() => {
   return {
     addModule: (item) => item,
     getAllModules: () => data,
-    removeModule: (id) => {
-      if (id === data[0].id || id === data[1].id)
+    removeModule: (code) => {
+      if (code === data[0].code || code === data[1].code)
         return {}
       return Promise.reject(new Error('empty'))
     }
