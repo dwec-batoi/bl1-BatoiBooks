@@ -1,3 +1,14 @@
+#messages .error {
+  background-color:lightcoral;
+}
+#messages .info {
+  background-color:lightgreen;
+}
+.card {
+  margin: 1em;
+  background-color: beige;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
