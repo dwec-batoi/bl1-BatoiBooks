@@ -6,10 +6,6 @@ export default class Users {
     this.data = []
   }
   
-  getUserById(id) {
-    return this.data.find((item) => item.id === id) || {}
-  }
-
   async populateData() {
     const repository = new UsersRepository()
     const users = await repository.getAllUsers()
@@ -32,7 +28,7 @@ export default class Users {
   async removeItem(id) {
     const repository = new UsersRepository()
     await repository.removeUser(id)
-    const index = this.data.findIndex((item) => item.id === id)
+    const index = this.getUserIndexById(id)
     // No necesitamos comprobar si devuelve -1 porque si no existe
     // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1)
@@ -44,6 +40,14 @@ export default class Users {
     this.data.forEach((item) => usersToString += `
     - ${item}`)
     return usersToString
+  }
+
+  getUserById(id) {
+    return this.data.find((item) => item.id === id) || {}
+  }
+
+  getUserIndexById(id) {
+    return this.data.findIndex((item) => item.id === id)
   }
 
   getUserByNick(nick) {

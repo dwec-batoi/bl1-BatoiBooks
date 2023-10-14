@@ -6,10 +6,6 @@ export default class Modules {
     this.data = []
   }
   
-  getModuleByCode(code) {
-    return this.data.find((item) => item.code === code) || {}
-  }
-
   async populateData() {
     const repository = new ModulesRepository()
     const modules = await repository.getAllModules()
@@ -21,19 +17,30 @@ export default class Modules {
     ))
   }
 
-  addItem(payload) {
-    const newModule = new Module(payload.code, payload.cliteral, payload.vliteral, payload.idCourse)
+  async addItem(payload) {
+    const repository = new ModulesRepository()
+    const module = await repository.addModule(payload)
+    const newModule = new Module(module.code, module.cliteral, module.vliteral, module.idCourse)
     this.data.push(newModule)
     return newModule
   }
 
-  removeItem(code) {
-    const index = this.data.findIndex((item) => item.code === code)
-    if (index === -1) {
-      throw "No existe un módulo con código " + code
-    }
+  async removeItem(code) {
+    const repository = new ModulesRepository()
+    await repository.removeModule(code)
+    const index = this.getModuleIndexByCode(code)
+    // No necesitamos comprobar si devuelve -1 porque si no existe
+    // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1)
     return {}
+  }
+
+  getModuleByCode(code) {
+    return this.data.find((item) => item.code === code) || {}
+  }
+
+  getModuleIndexByCode(code) {
+    return this.data.findIndex((item) => item.code === code)
   }
 
   toString() {

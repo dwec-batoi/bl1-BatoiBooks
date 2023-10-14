@@ -35,6 +35,7 @@ export default class ModulesRepository {
   }
 
   async removeModule(id) {
+    // Json-server no acepta esta petición al no tener id
     const response = await fetch(SERVER + `/modules/${id}`, {
       method: 'DELETE',
     })
