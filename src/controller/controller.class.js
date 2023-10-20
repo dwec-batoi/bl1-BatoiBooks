@@ -52,14 +52,18 @@ export default class Controller {
       const status = this.view.bookForm.querySelector('input[name="status"]:checked').value
       const comments = this.view.bookForm.elements.comments.value
 
+      let book = {}
       try {
-        const book = await this.books.addItem({
+        book = await this.books.addItem({
             idModule, publisher, price, pages, status, comments
         })
-        this.view.renderBook(book)
       } catch(err) {
         this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
+        return
       }
+      this.view.renderBook(book)
+      this.setBookListeners(book)
+      this.view.clearForm()
     })
   }
 }
