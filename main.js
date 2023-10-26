@@ -49,8 +49,9 @@ document.querySelector('#app').innerHTML = `
       <div>
         <label>Estado:</label>
         <!-- Aquí poned un radiobutton para cada estado -->
+        <input type="radio" name="status" value="new">Nuevo</br>
         <input type="radio" name="status" value="good">Bueno</br>
-        <input type="radio" name="status" value="good">Bueno</br>
+        <input type="radio" name="status" value="used">Usado</br>
         <input type="radio" name="status" value="bad">Malo</br>
       </div>
     

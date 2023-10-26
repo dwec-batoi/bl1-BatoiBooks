@@ -54,5 +54,25 @@ export default class View{
     this.messages.appendChild(messageUI)
     window.scroll(0,0)
   }
+
+  getBookFormValues() {
+    const idModule = this.bookForm.elements['id-module'].value
+    // También podríamos coger el input directamente con su id
+    // document.getElementById('id-module').value
+    const publisher = this.bookForm.elements.publisher.value
+    const price = this.bookForm.elements.price.value
+    const pages = this.bookForm.elements.pages.value
+    const status = this.bookForm.querySelector('input[name="status"]:checked').value
+    const comments = this.bookForm.elements.comments.value
+
+    return {
+      idModule,
+      publisher,
+      price,
+      pages,
+      status,
+      comments
+    }
+  }
 }
 
