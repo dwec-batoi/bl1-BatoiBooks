@@ -65,9 +65,35 @@ export default class View{
     window.scroll(0,0)
   }
 
-  renderFormToEdit() {
+  getBookFormValues() {
+    const idModule = this.bookForm.elements['id-module'].value
+    // También podríamos coger el input directamente con su id
+    // document.getElementById('id-module').value
+    const publisher = this.bookForm.elements.publisher.value
+    const price = this.bookForm.elements.price.value
+    const pages = this.bookForm.elements.pages.value
+    const status = this.bookForm.querySelector('input[name="status"]:checked').value
+    const comments = this.bookForm.elements.comments.value
+
+    return {
+      idModule,
+      publisher,
+      price,
+      pages,
+      status,
+      comments
+    }
+  }
+
+  renderFormToEdit(book) {
     this.bookForm.querySelector('legend').textContent = "Editar libro"
     this.bookForm.elements.id.classList.remove('hidden')
+    this.bookForm.elements.id.value = book.id
+    this.bookForm.elements.publisher.value = book.publisher
+    this.bookForm.elements.price.value = book.price
+    this.bookForm.elements.pages.value = book.pages
+    this.bookForm.elements.comments.value = book.comments
+    this.bookForm.querySelector('input[name="status"][value="' + book.status + '"]').checked = true
   }
 }
 

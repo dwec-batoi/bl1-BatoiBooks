@@ -20,6 +20,7 @@ export default class Controller {
       ])
     } catch(err) {
       this.view.renderErrorMessage('error', 'Error cargando los datos: '+ err)
+      return
     }
     this.view.renderModulesInSelect(this.modules.data)
     this.books.data.forEach((book) => {
@@ -29,18 +30,11 @@ export default class Controller {
       
     this.view.bookForm.addEventListener('submit', async (event) => {
       event.preventDefault()
-      const idModule = this.view.bookForm.elements['id-module'].value
-      const publisher = this.view.bookForm.elements.publisher.value
-      const price = this.view.bookForm.elements.price.value
-      const pages = this.view.bookForm.elements.pages.value
-      const status = this.view.bookForm.querySelector('input[name="status"]:checked').value
-      const comments = this.view.bookForm.elements.comments.value
 
+      const payload = this.view.getBookFormValues()
       let book = {}
       try {
-        book = await this.books.addItem({
-            idModule, publisher, price, pages, status, comments
-        })
+        book = await this.books.addItem(payload)
       } catch(err) {
         this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
         return

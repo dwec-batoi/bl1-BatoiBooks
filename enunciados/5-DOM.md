@@ -91,7 +91,6 @@ Aquí tendremos métodos para todo lo que haya que hacer en la página:
 - completar el select de módulos
 - renderizar un libro
 - eliminar un libro
-- pintar todos los libros
 - mostrar un mensaje al usuario
 - ...
 
