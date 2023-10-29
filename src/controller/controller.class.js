@@ -21,26 +21,10 @@ export default class Controller {
     } catch(err) {
       this.view.renderErrorMessage('error', 'Error cargando los datos: '+ err)
     }
-    this.view.renderErrorMessage('info', 'Datos cargados correctamente')
     this.view.renderModulesInSelect(this.modules.data)
-    this.books.data.forEach((book) => this.view.renderBook(book))
-
-    this.view.remove.addEventListener('click', async () => {
-      const bookIdToRemove = prompt('Introduce la id del libro que quieres eliminar')
-      if (!bookIdToRemove || isNaN(bookIdToRemove)) {
-        this.view.renderErrorMessage('error', 'Debes introducir una id')
-        return
-      }
-      if (!this.books.getBookById(Number(bookIdToRemove)).id) {
-        this.view.renderErrorMessage('error', 'La id introducida no existe')
-        return
-      }
-      try {
-        await this.books.removeItem(Number(bookIdToRemove))
-      } catch(err) {
-        this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
-      }
-      this.view.renderRemoveBook(bookIdToRemove)
+    this.books.data.forEach((book) => {
+      const bookUI = this.view.renderBook(book)
+      this.setBookListeners(book, bookUI)
     })
       
     this.view.bookForm.addEventListener('submit', async (event) => {
@@ -61,9 +45,36 @@ export default class Controller {
         this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
         return
       }
-      this.view.renderBook(book)
-      this.setBookListeners(book)
-      this.view.clearForm()
+      const bookUI = this.view.renderBook(book)
+      this.setBookListeners(book, bookUI)
     })
+  }
+
+  setBookListeners(book, bookUI) {
+    // Listener de añadir al carrito
+    bookUI.querySelector('button.cart').addEventListener('click', () => {
+      try {
+        this.cart.addItem(book)
+        this.view.renderErrorMessage('info', 'Libro añadido al carrito')
+      } catch (err) {
+        this.view.renderErrorMessage('error', 'Error añadiendo el libro: '+ err)
+      }
+    })
+    
+    // Listener de borrar
+    bookUI.querySelector('button.delete').addEventListener('click', async () => {
+      if (confirm('Vas a borrar el libro con id ' + book.id 
+      + ' del módulo "' + book.idModule + '"')) {
+        try {
+          await this.books.removeItem(book.id)
+        } catch(err) {
+          this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
+        }
+        this.view.renderRemoveBook(book.id)  
+      }
+    })
+
+    // Listener de editar
+    bookUI.querySelector('button.edit').addEventListener('click', () => this.view.renderFormToEdit(book))    
   }
 }

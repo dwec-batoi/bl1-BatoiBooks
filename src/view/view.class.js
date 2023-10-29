@@ -21,7 +21,7 @@ export default class View{
         <p>Estado: ${book.status}</p>
         <p>${book.soldDate?'Vendido el ' + book.soldDate:'En venta'}</p>
         <p>Comentarios: ${book.coments || ''}</p>
-        <button class="add-cart" title="Añadir al carrito">
+        <button class="cart add-cart" title="Añadir al carrito">
           <span class="material-icons">add_shopping_cart</span>
         </button>
         <button class="edit" title="Editar">
@@ -34,6 +34,8 @@ export default class View{
     `
     this.list.appendChild(bookUI)
     this.bookForm.reset()
+
+    return bookUI
   }
 
   renderModulesInSelect(modules) {
@@ -61,6 +63,11 @@ export default class View{
     `
     this.messages.appendChild(messageUI)
     window.scroll(0,0)
+  }
+
+  renderFormToEdit() {
+    this.bookForm.querySelector('legend').textContent = "Editar libro"
+    this.bookForm.elements.id.classList.remove('hidden')
   }
 }
 

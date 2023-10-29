@@ -23,6 +23,11 @@ document.querySelector('#app').innerHTML = `
   <div id="list"></div>
   <div id="form">
     <form id="bookForm">
+      <legend>Añadir libro</legend>
+      <div>
+        <label for="id">Id:</label>
+        <input type="text" id="id"><br>
+      </div>
       <div>
         <label for="id-module">Módulo:</label>
         <select id="id-module">
