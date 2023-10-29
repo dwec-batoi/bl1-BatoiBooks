@@ -26,30 +26,30 @@ document.querySelector('#app').innerHTML = `
     <form id="bookForm">
       <div>
         <label for="id-module">Módulo:</label>
-        <select id="id-module">
-          <option>- Selecciona un módulo -</option>
+        <select id="id-module" required>
+          <option value="">- Selecciona un módulo -</option>
         </select><br>
       </div>
     
       <div>
         <label for="publisher">Editorial:</label>
-        <input type="text" id="publisher"><br>
+        <input type="text" id="publisher" required><br>
       </div>
     
       <div>
         <label for="price">Precio:</label>
-        <input type="number" id="price"><br>
+        <input type="number" id="price" required min="0" step="0.01"><br>
       </div>
     
       <div>
         <label for="pages">Páginas:</label>
-        <input type="number" id="pages"><br>
+        <input type="number" id="pages" required min="0"><br>
       </div>
     
       <div>
         <label>Estado:</label>
         <!-- Aquí poned un radiobutton para cada estado -->
-        <input type="radio" name="status" value="new">Nuevo</br>
+        <input type="radio" name="status" value="new" required>Nuevo</br>
         <input type="radio" name="status" value="good">Bueno</br>
         <input type="radio" name="status" value="used">Usado</br>
         <input type="radio" name="status" value="bad">Malo</br>

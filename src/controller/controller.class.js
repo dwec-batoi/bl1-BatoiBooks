@@ -49,6 +49,9 @@ export default class Controller {
       event.preventDefault()
 
       const payload = this.view.getBookFormValues()
+      payload.price = Number(payload.price)
+      payload.pages = Number(payload.pages)
+
       try {
         const book = await this.books.addItem(payload)
         this.view.renderBook(book)

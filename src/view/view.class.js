@@ -17,11 +17,11 @@ export default class View{
       <div>
         <h5>${book.idModule + ' (' + book.id +')'}</h5>
         <h6>${book.publisher}</h6>
-        <p>Precio: ${book.price}</p>
+        <p>Precio: ${book.price.toFixed(2)} €</p>
         <p>Páginas: ${book.pages}</p>
         <p>Estado: ${book.status}</p>
         <p>${book.soldDate?'Vendido el ' + book.soldDate:'En venta'}</p>
-        <p>Comentarios: ${book.coments || ''}</p>
+        <p>Comentarios: ${book.comments || ''}</p>
       </div>
     `
     this.list.appendChild(bookUI)
