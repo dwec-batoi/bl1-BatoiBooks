@@ -12,6 +12,10 @@ export default class Books {
     return this.data.find((item) => item.id === id) || {}
   }
 
+  getBookIndexById(id) {
+    return this.data.findIndex((item) => item.id === id)
+  }
+
   async populateData() {
     const repository = new BooksRepository()
     const books = await repository.getAllBooks()
@@ -26,10 +30,19 @@ export default class Books {
     return newBook
   }
 
+  async changeItem(payload) {
+    const repository = new BooksRepository()
+    const book = await repository.changeBook(payload)
+    const newBook = new Book(book)
+    const index = this.getBookIndexById(id)
+    this.data.splice(index, 1, newBook)
+    return newBook
+  }
+
   async removeItem(id) {
     const repository = new BooksRepository()
     await repository.removeBook(id)
-    const index = this.data.findIndex((item) => item.id === id)
+    const index = this.getBookIndexById(id)
     // No necesitamos comprobar si devuelve -1 porque si no existe
     // el repositorio habrá lanzado un error que interrumpirá la fn
     this.data.splice(index, 1)

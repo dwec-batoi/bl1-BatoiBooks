@@ -24,9 +24,9 @@ document.querySelector('#app').innerHTML = `
   <div id="form">
     <form id="bookForm">
       <legend>Añadir libro</legend>
-      <div>
+      <div class="hidden">
         <label for="id">Id:</label>
-        <input type="text" id="id"><br>
+        <input type="text" id="id" disabled><br>
       </div>
       <div>
         <label for="id-module">Módulo:</label>

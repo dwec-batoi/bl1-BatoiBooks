@@ -1,6 +1,7 @@
 import Books from '../model/books.class'
 import Users from '../model/users.class'
 import Modules from '../model/modules.class'
+import Cart from '../model/cart.class'
 import View from '../view/view.class'
 
 export default class Controller {
@@ -8,6 +9,7 @@ export default class Controller {
     this.books = new Books()
     this.users = new Users()
     this.modules = new Modules()
+    this.cart = new Cart()
     this.view = new View()
   }
 
@@ -22,6 +24,7 @@ export default class Controller {
       this.view.renderErrorMessage('error', 'Error cargando los datos: '+ err)
       return
     }
+    this.cart.populateData()
     this.view.renderModulesInSelect(this.modules.data)
     this.books.data.forEach((book) => {
       const bookUI = this.view.renderBook(book)
@@ -32,15 +35,27 @@ export default class Controller {
       event.preventDefault()
 
       const payload = this.view.getBookFormValues()
+      payload.price = Number(payload.price)
+      payload.pages = Number(payload.pages)
+      
+      const editing = payload.id // quiero saber si estoy editando o añadiendo
+
       let book = {}
       try {
-        book = await this.books.addItem(payload)
+        book = editing
+          ? await this.books.changeItem(payload)
+          : await this.books.addItem(payload)
       } catch(err) {
-        this.view.renderErrorMessage('error', 'Error borrando el libro: '+ err)
+        this.view.renderErrorMessage('error', 'Error guardando el libro: '+ err)
         return
       }
-      const bookUI = this.view.renderBook(book)
-      this.setBookListeners(book, bookUI)
+      let bookUI
+      if (editing) {
+        bookUI = this.view.renderBook(book, editing)
+      } else {
+        this.view.renderBook(book, editing)
+      }
+      this.setBookListeners(book, bookUI)  
     })
   }
 

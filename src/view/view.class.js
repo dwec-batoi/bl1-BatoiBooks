@@ -7,20 +7,25 @@ export default class View{
     this.messages = document.getElementById('messages')
   }
 
-  renderBook(book) {
-    const bookUI = document.createElement('div')
-    bookUI.id = 'book-'+book.id
-    bookUI.className = 'card'
+  renderBook(book, editting) {
+    let bookUI
+    if (editting) {
+      bookUI = document.getElementById('book-' + book.id)
+    } else {
+      bookUI = document.createElement('div')
+      bookUI.id = 'book-' + book.id
+      bookUI.className = 'card'
+    }    
     bookUI.innerHTML = `
     <img src="${book.photo}" alt="Lbro: ${book.id}">
       <div>
         <h5>${book.idModule + ' (' + book.id +')'}</h5>
         <h6>${book.publisher}</h6>
-        <p>Precio: ${book.price}</p>
+        <p>Precio: ${book.price.toFixed(2)} €</p>
         <p>Páginas: ${book.pages}</p>
         <p>Estado: ${book.status}</p>
         <p>${book.soldDate?'Vendido el ' + book.soldDate:'En venta'}</p>
-        <p>Comentarios: ${book.coments || ''}</p>
+        <p>Comentarios: ${book.comments || ''}</p>
         <button class="cart add-cart" title="Añadir al carrito">
           <span class="material-icons">add_shopping_cart</span>
         </button>
@@ -32,8 +37,10 @@ export default class View{
         </button>
       </div>
     `
-    this.list.appendChild(bookUI)
-    this.bookForm.reset()
+    if (!editting) {
+      this.list.appendChild(bookUI)
+    }
+    this.renderFormToAdd()
 
     return bookUI
   }
@@ -69,6 +76,7 @@ export default class View{
     const idModule = this.bookForm.elements['id-module'].value
     // También podríamos coger el input directamente con su id
     // document.getElementById('id-module').value
+    const id = this.bookForm.elements.id.value
     const publisher = this.bookForm.elements.publisher.value
     const price = this.bookForm.elements.price.value
     const pages = this.bookForm.elements.pages.value
@@ -76,6 +84,7 @@ export default class View{
     const comments = this.bookForm.elements.comments.value
 
     return {
+      id,
       idModule,
       publisher,
       price,
@@ -87,13 +96,23 @@ export default class View{
 
   renderFormToEdit(book) {
     this.bookForm.querySelector('legend').textContent = "Editar libro"
-    this.bookForm.elements.id.classList.remove('hidden')
+    this.bookForm.querySelector('button[type="submit"').textContent = "Cambiar"
+    this.bookForm.elements.id.parentElement.classList.remove('hidden')
     this.bookForm.elements.id.value = book.id
+    this.bookForm.elements['id-module'].value = book.idModule
     this.bookForm.elements.publisher.value = book.publisher
     this.bookForm.elements.price.value = book.price
     this.bookForm.elements.pages.value = book.pages
     this.bookForm.elements.comments.value = book.comments
     this.bookForm.querySelector('input[name="status"][value="' + book.status + '"]').checked = true
   }
+
+  renderFormToAdd() {
+    this.bookForm.querySelector('legend').textContent = "Añadir libro"
+    this.bookForm.querySelector('button[type="submit"').textContent = "Añadir"
+    this.bookForm.elements.id.parentElement.classList.add('hidden')
+    this.bookForm.reset()
+  }
+
 }
 
