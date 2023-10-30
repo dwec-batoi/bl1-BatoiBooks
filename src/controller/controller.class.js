@@ -57,6 +57,8 @@ export default class Controller {
       }
       this.setBookListeners(book, bookUI)  
     })
+
+    this.view.navAddBook.addEventListener('click', () => this.view.renderFormToAdd())
   }
 
   setBookListeners(book, bookUI) {

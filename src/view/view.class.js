@@ -5,6 +5,7 @@ export default class View{
     this.form = document.getElementById('form')
     this.bookForm = document.getElementById('bookForm')
     this.messages = document.getElementById('messages')
+    this.navAddBook = document.querySelector('nav a[href="#form"]')
   }
 
   renderBook(book, editting) {
