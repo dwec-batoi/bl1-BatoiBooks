@@ -115,5 +115,9 @@ export default class View{
     this.bookForm.reset()
   }
 
+  showPage(newPage, oldPage) {
+    document.getElementById(oldPage).classList.add('hidden')
+    document.getElementById(newPage).classList.remove('hidden')
+  }
 }
 

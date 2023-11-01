@@ -59,6 +59,17 @@ export default class Controller {
     })
 
     this.view.navAddBook.addEventListener('click', () => this.view.renderFormToAdd())
+
+    window.addEventListener('hashchange', (event) => {
+      const oldPage = (event.oldURL.indexOf('#') === -1)
+        ? 'list'
+        : event.oldURL.substr(event.oldURL.indexOf('#') + 1) 
+        const newPage = (event.newURL.indexOf('#') === -1)
+        ? 'list'
+        : event.newURL.substr(event.newURL.indexOf('#') + 1) 
+
+      this.view.showPage(newPage, oldPage)
+    })
   }
 
   setBookListeners(book, bookUI) {

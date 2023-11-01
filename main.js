@@ -21,7 +21,7 @@ document.querySelector('#app').innerHTML = `
   <div id="messages"></div>
   <div>
   <div id="list"></div>
-  <div id="form">
+  <div id="form" class="hidden">
     <form id="bookForm">
       <legend>Añadir libro</legend>
       <div class="hidden">
@@ -68,7 +68,7 @@ document.querySelector('#app').innerHTML = `
       <button type="reset">Reset</button>
     </form>        
   </div>
-  <div id="about">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit totam, adipisci iste ducimus id voluptatum voluptatem aut ea vel aperiam magnam officiis non officia tempora dicta veritatis nihil doloremque fugit!</div>
+  <div id="about" class="hidden">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit totam, adipisci iste ducimus id voluptatum voluptatem aut ea vel aperiam magnam officiis non officia tempora dicta veritatis nihil doloremque fugit!</div>
   </div>
   <footer>Juan Segura - DWEC</footer>
 `
