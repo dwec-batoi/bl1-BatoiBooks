@@ -56,6 +56,7 @@ export default class Controller {
         const bookUI = this.view.renderBook(book)
         this.setBookListeners(book, bookUI)  
       }
+      this.view.showPage('list', 'form')
     })
 
     this.view.navAddBook.addEventListener('click', () => this.view.renderFormToAdd())
@@ -97,6 +98,9 @@ export default class Controller {
     })
 
     // Listener de editar
-    bookUI.querySelector('button.edit').addEventListener('click', () => this.view.renderFormToEdit(book))    
+    bookUI.querySelector('button.edit').addEventListener('click', () => {
+      this.view.renderFormToEdit(book)
+      this.view.showPage('form', 'list')
+    })    
   }
 }
