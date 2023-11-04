@@ -8,17 +8,12 @@ export default class View{
     this.navAddBook = document.querySelector('nav a[href="#form"]')
   }
 
-  renderBook(book, editting) {
-    let bookUI
-    if (editting) {
-      bookUI = document.getElementById('book-' + book.id)
-    } else {
-      bookUI = document.createElement('div')
-      bookUI.id = 'book-' + book.id
-      bookUI.className = 'card'
-    }    
+  renderBook(book) {
+    const bookUI = document.createElement('div')
+    bookUI.id = 'book-'+book.id
+    bookUI.className = 'card'
     bookUI.innerHTML = `
-    <img src="${book.photo}" alt="Lbro: ${book.id}">
+      <img src="${book.photo}" alt="Libro: ${book.id}">
       <div>
         <h5>${book.idModule + ' (' + book.id +')'}</h5>
         <h6>${book.publisher}</h6>
@@ -27,6 +22,8 @@ export default class View{
         <p>Estado: ${book.status}</p>
         <p>${book.soldDate?'Vendido el ' + book.soldDate:'En venta'}</p>
         <p>Comentarios: ${book.comments || ''}</p>
+      </div>
+      <div>
         <button class="cart add-cart" title="Añadir al carrito">
           <span class="material-icons">add_shopping_cart</span>
         </button>
@@ -38,12 +35,28 @@ export default class View{
         </button>
       </div>
     `
-    if (!editting) {
-      this.list.appendChild(bookUI)
-    }
-    this.renderFormToAdd()
+    this.list.appendChild(bookUI)
+    this.bookForm.reset()
 
     return bookUI
+  }
+
+
+  renderEditedBook(book) {
+    const bookUI = document.getElementById('book-' + book.id)
+    const bookUIImg = bookUI.querySelector('img')
+    bookUIImg.src = book.photo
+    bookUIImg.alt = 'Libro: ' + book.id
+    bookUI.querySelector('div').innerHTML = `
+        <h5>${book.idModule + ' (' + book.id +')'}</h5>
+        <h6>${book.publisher}</h6>
+        <p>Precio: ${book.price.toFixed(2)} €</p>
+        <p>Páginas: ${book.pages}</p>
+        <p>Estado: ${book.status}</p>
+        <p>${book.soldDate?'Vendido el ' + book.soldDate:'En venta'}</p>
+        <p>Comentarios: ${book.comments || ''}</p>
+    `
+    this.renderFormToAdd()
   }
 
   renderModulesInSelect(modules) {
