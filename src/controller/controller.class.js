@@ -49,13 +49,13 @@ export default class Controller {
         this.view.renderErrorMessage('error', 'Error guardando el libro: '+ err)
         return
       }
-      let bookUI
+
       if (editing) {
-        bookUI = this.view.renderBook(book, editing)
+        this.view.renderEditedBook(book)
       } else {
-        this.view.renderBook(book, editing)
+        const bookUI = this.view.renderBook(book)
+        this.setBookListeners(book, bookUI)  
       }
-      this.setBookListeners(book, bookUI)  
     })
 
     this.view.navAddBook.addEventListener('click', () => this.view.renderFormToAdd())
