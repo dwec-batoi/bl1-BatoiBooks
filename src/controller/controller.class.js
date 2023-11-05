@@ -47,11 +47,13 @@ export default class Controller {
       
     this.view.bookForm.addEventListener('submit', async (event) => {
       event.preventDefault()
+      const idUser = 2    // guardo el usuario que soy yo
 
       const payload = this.view.getBookFormValues()
       payload.price = Number(payload.price)
       payload.pages = Number(payload.pages)
-
+      payload.idUser = idUser
+      
       try {
         const book = await this.books.addItem(payload)
         this.view.renderBook(book)
