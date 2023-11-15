@@ -35,11 +35,27 @@ export default class Controller {
       event.preventDefault()
       const idUser = 2    // guardo el usuario que soy yo
 
+      const idModuleSelect = document.getElementById('id-module')
+      const idInput = document.getElementById('id')
+      if (!idInput.value && idModuleSelect.value) {
+        try {
+          if (await this.books.bookExists(idUser, idModuleSelect.value)) {
+            idModuleSelect.setCustomValidity('Ya has añadido ese libro')
+          } else {
+            idModuleSelect.setCustomValidity('')
+          }
+        } catch (error) {
+          this.view.renderErrorMessage('error', 'Error comprobando si existe el libro: '+ err)          
+        }
+      }
+      if (!this.view.validateForm()) {
+        return
+      }
       const payload = this.view.getBookFormValues()
       payload.price = Number(payload.price)
       payload.pages = Number(payload.pages)
       payload.idUser = idUser
-      
+
       const editing = payload.id // quiero saber si estoy editando o añadiendo
 
       let book = {}

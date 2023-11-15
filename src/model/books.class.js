@@ -8,6 +8,11 @@ export default class Books {
     this.data = []
   }
 
+  async bookExists(idUser, idModule) {
+    const repository = new BooksRepository()
+    return await repository.bookExists(idUser, idModule)
+  }
+
   getBookById(id) {
     return this.data.find((item) => item.id === id) || {}
   }

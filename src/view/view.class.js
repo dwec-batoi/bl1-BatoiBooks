@@ -132,5 +132,22 @@ export default class View{
     document.getElementById(oldPage).classList.add('hidden')
     document.getElementById(newPage).classList.remove('hidden')
   }
+
+  validateForm() {
+    if (this.bookForm.checkValidity()) {
+      document.querySelectorAll('#bookForm span.error').forEach((span) => {
+        span.textContent = ''
+      })
+      return true
+    }
+    Array.from(this.bookForm.elements).forEach((item) => {
+      const spanError = item.parentElement.querySelector('span.error')
+      if (item.checkValidity()) {
+        spanError.textContent = ''
+      } else {
+        spanError.textContent = item.validationMessage
+      }
+    })
+  }
 }
 

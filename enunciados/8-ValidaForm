@@ -1,0 +1,23 @@
+# Bloc 1: Javascript. UT 8: Validación de formularios
+## Ejercicio 8.1 - Valida formulario de añadir libros
+Nos faltaba validar los datos del formulario antes de enviarlos a la BBDD. Para ello usaremos la API de validación de formularios y así nos ahorraremos mucho trabajo.
+
+Lo que hemos de validar de cada campo es:
+- `idModule`: obligatorio
+- `publisher`: obligatorio
+- `price`: obligatorio, numérico y mayor o igual que 0. Además deberemos poder poner céntimos
+- `pages`: obligatorio, numérico y mayor o igual que 0
+- `status`: obligatorio
+
+No validaremos nada ni de la `id` (que no puede cambiarla el usuario por lo que estará bien) ni de `comments`.
+
+Como es la vista la que conoce los detalles del formulario debería ser ella la que haga la validación y desde el controlador sólo le preguntaremos si el formulario es o no válido para procesarlo.
+
+## Ejercicio 8.2 - Prohibido repetir módulo
+Una vez hecho la anterior y comprobado que funciona correctamente vamos a hacer un tipo de validación que no puede hacer el _front_ sólo: vamos a prohibir que un usuario pueda añadir más de un libro del mismo módulo.
+
+Para ello debemos tener un método en la API que nos diga si ese usuario ya tiene en la base de datos un libro con el módulo que se quiere añadir, y otro método en la clase `Books` que haga esa llamada a la API y nos diga si ya existe el libro.
+
+Como la vista no tiene acceso al modelo esta validación tiene que hacerla el controlador. Cuando se produzca el _submit_ del formulario el controlador cogerá el valor del select del módulo y le preguntará al modelo si ya existe ese libro en la base de datos.
+
+En caso afirmativo el campo `id-module` no será válido por lo que el controlador le pondrà un "error personalizado" con `setCustomValidity` antes de decirle a la vista que valide el formulario.

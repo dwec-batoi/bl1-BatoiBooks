@@ -22,32 +22,37 @@ document.querySelector('#app').innerHTML = `
   <div>
   <div id="list"></div>
   <div id="form" class="hidden">
-    <form id="bookForm">
+    <form id="bookForm" novalidate>
       <legend>Añadir libro</legend>
       <div class="hidden">
         <label for="id">Id:</label>
         <input type="text" id="id" disabled><br>
+        <span class="error"></span>
       </div>
       <div>
         <label for="id-module">Módulo:</label>
         <select id="id-module" required>
-          <option>- Selecciona un módulo -</option>
+          <option value="">- Selecciona un módulo -</option>
         </select><br>
+        <span class="error"></span>
       </div>
     
       <div>
         <label for="publisher">Editorial:</label>
         <input type="text" id="publisher" required><br>
+        <span class="error"></span>
       </div>
     
       <div>
         <label for="price">Precio:</label>
         <input type="number" id="price" required min="0" step="0.01"><br>
+        <span class="error"></span>
       </div>
     
       <div>
         <label for="pages">Páginas:</label>
         <input type="number" id="pages" required min="0"><br>
+        <span class="error"></span>
       </div>
     
       <div>
@@ -57,11 +62,13 @@ document.querySelector('#app').innerHTML = `
         <input type="radio" name="status" value="good">Bueno</br>
         <input type="radio" name="status" value="used">Usado</br>
         <input type="radio" name="status" value="bad">Malo</br>
+        <span class="error"></span>
       </div>
     
       <div>
         <label for="comments">Comentarios:</label>
         <textarea id="comments"></textarea>
+        <span class="error"></span>
       </div>
     
       <button type="submit">Añadir</button>
