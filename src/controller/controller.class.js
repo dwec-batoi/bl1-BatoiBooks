@@ -36,8 +36,7 @@ export default class Controller {
       const idUser = 2    // guardo el usuario que soy yo
 
       const idModuleSelect = document.getElementById('id-module')
-      const idInput = document.getElementById('id')
-      if (!idInput.value && idModuleSelect.value) {
+      if (idModuleSelect.value) {
         try {
           if (await this.books.bookExists(idUser, idModuleSelect.value)) {
             idModuleSelect.setCustomValidity('Ya has añadido ese libro')
